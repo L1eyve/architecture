@@ -112,13 +112,27 @@ func (r *partRepository) Create(part Part) Part {
 	return part
 }
 
-func (r *partRepository) Delete(id int64) error {
+func (r *partRepository) Withdraw(id int64, quantity int) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	if _, exists := r.storage[id]; !exists {
+	part, exists := r.storage[id]
+	if !exists {
 		return ErrNotFound
 	}
-	delete(r.storage, id)
+
+	part.Quantity -= quantity
+	r.storage[id] = part
 	return nil
+}
+
+func (r *partRepository) GetByID(id int64) (Part, error) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	part, exists := r.storage[id]
+	if !exists {
+		return Part{}, ErrNotFound
+	}
+	return part, nil
 }

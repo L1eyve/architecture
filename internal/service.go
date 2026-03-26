@@ -24,6 +24,10 @@ func (s *partService) CreatePart(name, partType string, quantity int, weight flo
 	return created, nil
 }
 
-func (s *partService) DeletePart(id int64) error {
-	return s.repo.Delete(id)
+func (s *partService) Withdraw(id int64, quantity int) error {
+	return s.repo.Withdraw(id, quantity)
+}
+
+func (s *partService) GetByID(id int64) (Part, error) {
+	return s.repo.GetByID(id)
 }
