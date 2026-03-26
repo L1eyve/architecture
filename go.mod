@@ -1,4 +1,4 @@
-module architecture
+module golang-arch
 
 go 1.25.8
 
