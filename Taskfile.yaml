@@ -58,3 +58,7 @@ tasks:
     cmds:
       - '{{.GOLANGCI_LINT}} run ./... --config=.golangci.yml'
 
+e2e_tests:
+    desc: "Запускает E2E тесты API"
+    cmds:
+      - go test ./internal/... -v -run TestAPI
